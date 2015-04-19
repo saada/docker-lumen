@@ -19,9 +19,7 @@ lumen new app
 
 ### Configuration
 
-In order for your configuration values to be loaded, you will need to copy the `.env.docker` to the `app/.env`, then, uncomment the Dotenv::load() method call in your `bootstrap/app.php` file. 
-
-To change configuration values, you must change both the .env values as well as the docker-compose.yml environment values.
+To change configuration values, look in the `docker-compose.yml` file and change the `php` container's environment variables. These directly correlate to the Lumen environment variables.
 
 ## Docker Setup
 ### Install docker, compose, and machine
