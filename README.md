@@ -2,7 +2,7 @@
 
 This setup is great for writing quick apps in PHP using Lumen from an OSX machine. It uses Virtualbox and docker-machine to create the actual environment and then uses compose to setup the application services.
 
-### Create Lumen App
+## Create Lumen App
 
 If you haven't already installed lumen globally, run
 
@@ -17,6 +17,13 @@ cd images/php
 lumen new app
 ```
 
+### Configuration
+
+In order for your configuration values to be loaded, you will need to copy the `.env.docker` to the `app/.env`, then, uncomment the Dotenv::load() method call in your `bootstrap/app.php` file. 
+
+To change configuration values, you must change both the .env values as well as the docker-compose.yml environment values.
+
+## Docker Setup
 ### Install docker, compose, and machine
 
 ```
@@ -25,7 +32,7 @@ brew install docker docker-compose docker-machine
 ```
 
 
-### InstallVirtualbox
+### Install Virtualbox
 [Download Virtualbox](https://www.virtualbox.org/wiki/Downloads)
 
 ### Setup docker environment
