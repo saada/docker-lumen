@@ -2,6 +2,13 @@
 
 This setup is great for writing quick apps in PHP using Lumen from an OSX machine. It uses Virtualbox and docker-machine to create the actual environment and then uses compose to setup the application services.
 
+## Clone this repo
+
+```bash
+git clone https://github.com/saada/docker-lumen.git
+cd docker-lumen
+```
+
 ## Create Lumen App
 
 If you haven't already installed lumen globally, run
