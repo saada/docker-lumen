@@ -8,7 +8,7 @@ nginx:
 php:
   build: images/php
   volumes:
-    - images/php/app:/app
+    - ./images/php/app:/app
   working_dir: /app/public
   command: php-fpm
   links:
