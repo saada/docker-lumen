@@ -29,41 +29,31 @@ lumen new app
 To change configuration values, look in the `docker-compose.yml` file and change the `php` container's environment variables. These directly correlate to the Lumen environment variables.
 
 ## Docker Setup
-### Install docker, compose, and machine
-
-```
-brew update
-brew install docker docker-compose docker-machine
-```
-
-
-### Install Virtualbox
-[Download Virtualbox](https://www.virtualbox.org/wiki/Downloads)
+### Install (Docker Toolbox)[https://www.docker.com/products/docker-toolbox]
 
 ### Setup docker environment
 
 ```
-docker-machine create -d virtualbox dev
-docker-machine start dev
-eval $(docker-machine env dev)
+docker-machine create -d virtualbox default
+docker-machine start
+eval $(docker-machine env)
 ```
 
 ### Build & Run!
 
 ```
-docker-compose build
-docker-compose up -d
+docker-compose up --build -d
 ```
 you can now start writing your app!  
 
 Your docker machine IP can be found via
 
 ```
-docker-machine ls
+docker-machine ip
 ```
 
 ### Stop
 
 ```
-docker-compose kill
+docker-compose stop
 ```
