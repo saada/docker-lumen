@@ -1,6 +1,6 @@
 # Docker + Lumen with Nginx and MySQL
 
-This setup is great for writing quick apps in PHP using Lumen from an OSX machine. It uses Virtualbox and docker-machine to create the actual environment and then uses compose to setup the application services.
+This setup is great for writing quick apps in PHP using Lumen from an any Docker client. It uses docker-compose to setup the application services.
 
 ## Clone this repo
 
@@ -14,7 +14,7 @@ cd docker-lumen
 If you haven't already installed lumen globally, run
 
 ```
-composer global require "laravel/lumen-installer=~1.0"
+composer global require "laravel/lumen-installer"
 ```
 
 now, create the app in the `images\php` directory named `app`
@@ -29,31 +29,21 @@ lumen new app
 To change configuration values, look in the `docker-compose.yml` file and change the `php` container's environment variables. These directly correlate to the Lumen environment variables.
 
 ## Docker Setup
-### Install [Docker Toolbox](https://www.docker.com/products/docker-toolbox)
-
-### Setup docker environment
-
-```
-docker-machine create -d virtualbox default
-docker-machine start
-eval $(docker-machine env)
-```
+### [Docker for Mac](https://docs.docker.com/docker-for-mac/)
+### [Docker for Windows](https://docs.docker.com/docker-for-windows/)
+### [Docker for Linux](https://docs.docker.com/engine/installation/linux/)
 
 ### Build & Run!
 
 ```
 docker-compose up --build -d
 ```
-you can now start writing your app!  
+Navigate to [http://localhost:80](http://localhost:80) and you can now start developing your Lumen app on your host machine and you should see your changes on refresh! Classic PHP development cycle. 
 
-Your docker machine IP can be found via
+Feel free to configure the port in `docker-compose.yml` to whatever you like.
 
-```
-docker-machine ip
-```
-
-### Stop
+### Stop Everything
 
 ```
-docker-compose stop
+docker-compose down
 ```
