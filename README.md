@@ -11,17 +11,11 @@ cd docker-lumen
 
 ## Create Lumen App
 
-If you haven't already installed lumen globally, run
-
-```
-composer global require "laravel/lumen-installer"
-```
-
 now, create the app in the `images\php` directory named `app`
 
 ```
 cd images/php
-lumen new app
+docker run --rm -it -v $(pwd):/data/www --entrypoint /root/.composer/vendor/bin/lumen alairock/lumen new app
 ```
 
 ### Configuration
