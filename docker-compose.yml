@@ -8,8 +8,8 @@ nginx:
 php:
   build: images/php
   volumes:
-    - ./images/php/app:/app
-  working_dir: /app/public
+    - ./images/php:/var/www/html
+  working_dir: /var/www/html/public
   command: php-fpm
   links:
     - db
