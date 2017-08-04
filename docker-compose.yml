@@ -9,7 +9,7 @@ php:
   build: images/php
   volumes:
     - ./images/php:/var/www/html
-  working_dir: /var/www/html/public
+  working_dir: /var/www/html/app/public
   command: php-fpm
   links:
     - db
