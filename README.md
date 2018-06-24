@@ -17,7 +17,7 @@ now, create the app in the `images\php` directory named `app`
 
 ```bash
 cd images/php
-docker run --rm -it -v $(pwd):/data/www --entrypoint /root/.composer/vendor/bin/lumen saada/lumen-cli new app
+docker run --rm -it -v $(pwd):/app saada/lumen-cli lumen new app
 ```
 
 ### Configuration
