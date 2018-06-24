@@ -17,7 +17,7 @@ now, create the app in the `images\php` directory named `app`
 
 ```bash
 cd images/php
-docker run --rm -it -v $(pwd):/data/www --entrypoint /root/.composer/vendor/bin/lumen alairock/lumen new app
+docker run --rm -it -v $(pwd):/data/www --entrypoint /root/.composer/vendor/bin/lumen saada/lumen-cli new app
 ```
 
 ### Configuration
@@ -40,7 +40,6 @@ docker-compose up --build -d
 
 Navigate to [http://localhost:80](http://localhost:80) and you should see something like this
 ![image](Lumen_browser.png)
-
 
 Success! You can now start developing your Lumen app on your host machine and you should see your changes on refresh! Classic PHP development cycle. A good place to start is `images/php/app/routes/web.php`.
 
