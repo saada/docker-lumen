@@ -34,9 +34,9 @@ db:
   ports:
     - "3306:3306"
   environment:
-    MYSQL_ROOT_PASSWORD: secret
-    MYSQL_DATABASE: lumen
-    MYSQL_USER: lumen
-    MYSQL_PASSWORD: secret
+    MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    MYSQL_DATABASE: ${MYSQL_DATABASE}
+    MYSQL_USER: ${MYSQL_USERNAME}
+    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 cache:
   image: memcached
