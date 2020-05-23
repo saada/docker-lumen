@@ -13,7 +13,7 @@ cd docker-lumen
 
 ## Create Lumen App
 
-now, create the app in the `images\php` directory named `app`
+now, create the app in the `images/php` directory named `app`
 
 ```bash
 cd images/php
@@ -21,6 +21,14 @@ docker run --rm -it -v $(pwd):/app saada/lumen-cli lumen new app
 ```
 
 ### Configuration
+
+There are two configurations using `.env` files. One `.env` file for docker-compose.yaml and another for the php application.
+
+```sh
+# copy both files and make changes to them if needed
+cp .env.docker.example .env
+cp .env.app.example images/php/app/.env
+```
 
 To change configuration values, look in the `docker-compose.yml` file and change the `php` container's environment variables. These directly correlate to the Lumen environment variables.
 
@@ -49,6 +57,16 @@ Feel free to configure the default port 80 in `docker-compose.yml` to whatever y
 
 ```bash
 docker-compose down
+```
+
+## Running Artisan commands
+
+```sh
+docker-compose exec php sh
+# inside the container
+cd ..
+php artisan migrate
+php artisan cache:clear
 ```
 
 ## Contribute

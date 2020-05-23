@@ -32,7 +32,8 @@ php:
     MEMCACHED_HOST: cache
     CACHE_DRIVER: memcached
 db:
-  image: mysql
+  image: mysql:8
+  command: --default-authentication-plugin=mysql_native_password # needed as of mysql 8
   ports:
     - "3306:3306"
   environment:
@@ -41,4 +42,4 @@ db:
     MYSQL_USER: ${MYSQL_USERNAME}
     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 cache:
-  image: memcached
+  image: memcached:1.6-alpine
