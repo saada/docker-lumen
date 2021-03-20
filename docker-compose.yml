@@ -13,10 +13,9 @@ services:
     volumes:
       - ./api:/var/www/html/
     working_dir: /var/www/html/
-    command: sh -c "cd public && php-fpm"
+    command: sh -c "composer install && cd public && php-fpm"
     links:
       - db
-      - cache
     ports:
       - "9000:9000"
     environment:
@@ -30,8 +29,6 @@ services:
       DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-      MEMCACHED_HOST: cache
-      CACHE_DRIVER: memcached
   db:
     image: mysql:8
     command: --default-authentication-plugin=mysql_native_password # needed as of mysql 8
@@ -44,7 +41,5 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - dbdata:/var/lib/mysql
-  cache:
-    image: memcached:1.6-alpine
 volumes:
   dbdata:
