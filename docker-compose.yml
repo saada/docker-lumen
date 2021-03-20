@@ -6,12 +6,12 @@ nginx:
   ports:
     - "80:80"
   volumes:
-    - ./images/php/app/public:/var/www/html/app/public
+    - ./public:/var/www/html/public
 php:
   build: images/php
   volumes:
-    - ./images/php:/var/www/html
-  working_dir: /var/www/html/app/public
+    - ./:/var/www/html/
+  working_dir: /var/www/html/public
   command: php-fpm
   links:
     - db
