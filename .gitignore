@@ -1,2 +1,2 @@
-.idea
 api/vendor/
+api/.phpunit.result.cache
