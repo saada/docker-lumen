@@ -24,3 +24,5 @@ $router->get('/pizzas/{id}', ['uses' => 'PizzaController@show']);
 $router->post('/pizzas', ['uses' => 'PizzaController@create']);
 $router->put('/pizzas/{id}', ['update', 'uses' => 'PizzaController@update']);
 $router->delete('/pizzas/{id}', ['uses' => 'PizzaController@destroy']);
+
+$router->post('/pizzas/{id}/{property}', ['uses' => 'PizzaController@addProperty']);

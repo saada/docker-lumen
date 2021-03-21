@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pizza;
+use App\Models\Pizza\InvalidPropertyException;
 use Illuminate\Http\Request;
 
 class PizzaController extends Controller
@@ -61,5 +62,20 @@ class PizzaController extends Controller
     {
         Pizza::findOrFail($id)->delete();
         return response('', 204);
+    }
+
+    public function addProperty($id, $property)
+    {
+        $pizza = Pizza::findOrFail($id);
+
+        try {
+            if ($pizza->addProperty($property)) {
+                return response()->json($pizza, 200);
+            } else {
+                return response()->json('', 204);
+            }
+        } catch(InvalidPropertyException $e) {
+            return response()->json($e, 422);
+        }
     }
 }

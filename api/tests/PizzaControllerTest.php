@@ -22,6 +22,15 @@ class PizzaControllerTest extends TestCase
         ];
     }
 
+    private function staticPizzaData()
+    {
+        return [
+            'name' => 'TestPizza',
+            'price' => 5.99,
+            'properties' => 'vegan,glutenfree'
+        ];
+    }
+
     private function callAuthenticated($method, $uri, $parameters = []) {
         return $this->call($method, $uri, $parameters, [], [], [
             'HTTP_AUTHORIZATION' => 'Basic ' . $_ENV['API_KEY']
@@ -326,5 +335,36 @@ class PizzaControllerTest extends TestCase
         $invalidId = $testPizza->id + 1;
         $response = $this->callAuthenticated('DELETE', '/pizzas/' . strval($invalidId));
         $this->assertEquals(404, $response->status());
+    }
+
+    /*
+     * addProperty()
+     */
+
+    public function testAddProperty_withNonPresentProperty_shouldReturnSuccessful()
+    {
+        $testPizza = Pizza::create($this->staticPizzaData());
+        $response = $this->callAuthenticated('POST',
+            '/pizzas/' . strval($testPizza->id) . '/' . 'spicy'
+        );
+        $this->assertEquals(200, $response->status());
+    }
+
+    public function testAddProperty_withPresentProperty_shouldReturnNoContent()
+    {
+        $testPizza = Pizza::create($this->staticPizzaData());
+        $response = $this->callAuthenticated('POST',
+            '/pizzas/' . strval($testPizza->id) . '/' . 'vegan'
+        );
+        $this->assertEquals(204, $response->status());
+    }
+
+    public function testAddProperty_withInvalidProperty_shouldReturnUnprocessableEntity()
+    {
+        $testPizza = Pizza::create($this->staticPizzaData());
+        $response = $this->callAuthenticated('POST',
+            '/pizzas/' . strval($testPizza->id) . '/' . 'random'
+        );
+        $this->assertEquals(422, $response->status());
     }
 }
