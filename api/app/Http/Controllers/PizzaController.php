@@ -18,33 +18,40 @@ class PizzaController extends Controller
     }
 
     public function index() {
-      return response()->json(Pizza::all());
+        return response()->json(Pizza::all());
     }
 
     public function show($id)
     {
-      // return Pizza::findOrFail($id);
-      return response()->json(Pizza::find($id));
+        return response()->json(Pizza::findOrFail($id));
     }
 
     public function create(Request $request)
     {
-      $pizza = Pizza::create($request->all());
+        $validated = $this->validate($request, [
+            'name' => 'required',
+            'price' => 'required'
+        ]);
+        $pizza = Pizza::create($request->all());
 
-      return response()->json($pizza, 201);
+        if ($validated) {
+            return response()->json($pizza, 201);
+        } else {
+            return response()->json($errors, 422);
+        }
     }
 
     public function update($id, Request $request)
     {
-      $pizza = Pizza::findOrFail($id);
-      $pizza->update($request->all());
+        $pizza = Pizza::findOrFail($id);
+        $pizza->update($request->all());
 
-      return response()->json($pizza, 200);
+        return response()->json($pizza, 200);
     }
 
     public function delete($id)
     {
-      Pizza::findOrFail($id)->delete();
-      return response('', 204);
+        Pizza::findOrFail($id)->delete();
+        return response('', 204);
     }
 }
