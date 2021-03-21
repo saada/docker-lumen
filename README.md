@@ -1,16 +1,16 @@
 # Pizza API
 
 
-### Tools used
+### Tools / Frameworks used
 
 * Lumen
-* Docker
+* Docker & Docker Compose
 * MySQL
 
 ## Install
 
 ```bash
-Nothing to be done here, all requirements are installeb by docker.
+Nothing to be done here, all requirements are installed by docker.
 ```
 
 ## Start & migrate
