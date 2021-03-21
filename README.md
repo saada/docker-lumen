@@ -29,3 +29,14 @@ $ docker-compose exec php artisan migrate
 ```bash
 $ docker-compose exec php phpunit
 ```
+
+## Regenerate OpenApi Docs
+
+```bash
+$ docker-compose exec php openapi app/ -o api.json
+```
+
+## Accessing API and docs
+
+* The api is accessible under `localhost:80`
+* The docs are accessible under `localhost:8080`
