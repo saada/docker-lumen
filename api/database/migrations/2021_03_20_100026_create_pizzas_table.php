@@ -24,7 +24,7 @@ class CreatePizzasTable extends Migration
               'glutenfree',
               'spicy',
               'sweet'
-            ]);
+            ])->default('');
         });
     }
 
