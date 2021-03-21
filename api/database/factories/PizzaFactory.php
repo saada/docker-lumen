@@ -24,13 +24,13 @@ class PizzaFactory extends Factory
         return [
             'name' => $this->faker->name,
             'price' => $this->faker->randomDigitNotNull,
-            'properties' => join(',', $this->faker->randomElements($array = [
+            'properties' => $this->faker->randomElement($array = [
                 'vegan',
                 'vegetarian',
                 'glutenfree',
                 'spicy',
                 'sweet'
-            ], $count = 2))
+            ])
         ];
     }
 }
