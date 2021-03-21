@@ -49,7 +49,7 @@ class PizzaController extends Controller
         return response()->json($pizza, 200);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         Pizza::findOrFail($id)->delete();
         return response('', 204);
