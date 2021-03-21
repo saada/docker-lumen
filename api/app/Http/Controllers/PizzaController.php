@@ -32,9 +32,9 @@ class PizzaController extends Controller
             'name' => 'required',
             'price' => 'required'
         ]);
-        $pizza = Pizza::create($request->all());
 
         if ($validated) {
+            $pizza = Pizza::create($request->all());
             return response()->json($pizza, 201);
         } else {
             return response()->json($errors, 422);
@@ -44,9 +44,17 @@ class PizzaController extends Controller
     public function update($id, Request $request)
     {
         $pizza = Pizza::findOrFail($id);
-        $pizza->update($request->all());
+        $validated = $this->validate($request, [
+            'name' => 'required',
+            'price' => 'required'
+        ]);
 
-        return response()->json($pizza, 200);
+        if ($validated) {
+            $pizza->update($request->all());
+            return response()->json($pizza, 200);
+        } else {
+            return response()->json($errors, 422);
+        }
     }
 
     public function destroy($id)

@@ -36,12 +36,19 @@ class PizzaControllerTest extends TestCase
         return $this;
     }
 
-    // Without Authentication
-
-
     /*
      * INDEX
      */
+
+    /* WITHOUT AUTHENTICATION */
+
+    public function testIndex_withoutAuthentication()
+    {
+        $response = $this->call('GET', '/pizzas');
+        $this->assertEquals(401, $response->status());
+    }
+
+    /* WITH AUTHENTICATION */
 
     public function testIndex_shouldReturnSuccessful()
     {
@@ -70,6 +77,16 @@ class PizzaControllerTest extends TestCase
      * SHOW
      */
 
+    /* WITHOUT AUTHENTICATION */
+
+    public function testShow_withoutAuthentication()
+    {
+        $testPizza = (new PizzaFactory())->create();
+        $response = $this->call('GET', '/pizzas/' . $testPizza->id);
+        $this->assertEquals(401, $response->status());
+    }
+
+    /* WITH AUTHENTICATION */
     /* WITH VALID ID */
 
     public function testShow_withValidId_shouldReturnSuccessful()
@@ -94,6 +111,15 @@ class PizzaControllerTest extends TestCase
      * CREATE 
      */
 
+    /* WITHOUT AUTHENTICATION */
+
+    public function testCreate_withoutAuthentication()
+    {
+        $response = $this->call('POST', '/pizzas', $this->testPizzaData());
+        $this->assertEquals(401, $response->status());
+    }
+
+    /* WITH AUTHENTICATION */
     /* WITH VALID DATA */
 
     public function testCreate_withData_shouldReturnCreated()
@@ -133,7 +159,6 @@ class PizzaControllerTest extends TestCase
 
     public function testCreate_withoutData_shouldReturnValidationErrors()
     {
-        // Without Data
         $response = $this->jsonAuthenticated('POST', '/pizzas');
         $response = $response->seeJson([
             'name' => ['The name field is required.'],
@@ -161,12 +186,27 @@ class PizzaControllerTest extends TestCase
      * UPDATE
      */
 
-    /* WITH VALID ID */
+    /* WITHOUT AUTHENTICATION */
+
+    public function testUpdate_withoutAuthentication()
+    {
+        $testPizza = (new PizzaFactory())->create();
+        $response = $this->call('PUT', '/pizzas/' . strval($testPizza->id));
+        $this->assertEquals(401, $response->status());
+    }
+
+    /* WITH AUTHENTICATION */
+    /* WITH VALID ID AND VALID DATA */
 
     public function testUpdate_withValidId_shouldReturnSuccessful()
     {
         $testPizza = (new PizzaFactory())->create();
-        $response = $this->callAuthenticated('PUT', '/pizzas/' . strval($testPizza->id));
+        $someOtherData = $this->testPizzaData();
+        $response = $this->callAuthenticated('PUT', '/pizzas/' . strval($testPizza->id), [
+            'name' => $someOtherData['name'],
+            'price' => $someOtherData['price'],
+            'properties' => $someOtherData['properties']
+        ]);
         $this->assertEquals(200, $response->status());
     }
 
@@ -196,11 +236,70 @@ class PizzaControllerTest extends TestCase
         $this->assertEquals(404, $response->status());
     }
 
+    /* WITHOUT (VALID) DATA */
+
+    public function testUpdate_withoutData_shouldReturnBadRequest()
+    {
+        $testPizza = (new PizzaFactory())->create();
+        $response = $this->callAuthenticated('PUT', '/pizzas');
+        $response = $this->callAuthenticated('PUT', '/pizzas/' . $testPizza->id);
+        $this->assertEquals(422, $response->status());
+    }
+
+    public function testUpdate_withoutData_shouldNotIncreasePizzaCount()
+    {
+        $testPizza = (new PizzaFactory())->create();
+        $pizzaCount = Pizza::count();
+        $response = $this->callAuthenticated('PUT', '/pizzas/' . $testPizza->id);
+        $this->assertEquals(Pizza::count(), $pizzaCount);
+    }
+
+    public function testUpdate_withoutData_shouldReturnValidationErrors()
+    {
+        $testPizza = (new PizzaFactory())->create();
+        $response = $this->jsonAuthenticated('PUT', '/pizzas/' . $testPizza->id);
+        $response = $response->seeJson([
+            'name' => ['The name field is required.'],
+            'price' => ['The price field is required.']
+        ]);
+    }
+
+    public function testUpdate_withInvalidData_shouldReturnValidationErrors()
+    {
+        $testPizza = (new PizzaFactory())->create();
+
+        // Without name
+        $response = $this->jsonAuthenticated('PUT', '/pizzas/' . $testPizza->id, [
+            'price' => 7.99
+        ]);
+        $response = $response->seeJson([
+            'name' => ['The name field is required.'],
+        ]);
+
+        // Without price
+        $response = $this->jsonAuthenticated('PUT', '/pizzas/' . $testPizza->id, [
+            'name' => 'Hawai'
+        ]);
+        $response = $response->seeJson([
+            'price' => ['The price field is required.'],
+        ]);
+    }
+
 
     /*
      * DELETE
      */
 
+    /* WITHOUT AUTHENTICATION */
+
+    public function testDelete_withoutAuthentication()
+    {
+        $testPizza = (new PizzaFactory())->create();
+        $response = $this->call('DELETE', '/pizzas/' . strval($testPizza->id));
+        $this->assertEquals(401, $response->status());
+    }
+
+    /* WITH AUTHENTICATION */
     /* WITH VALID ID */
 
     public function testDelete_withValidId_shouldReturnNoContent()
