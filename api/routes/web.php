@@ -15,7 +15,7 @@
 
 
 $router->get('/', function() use ($router) {
-  return 'Pizza REST-API';
+  return 'Pizza REST-API. Version: ' . $_ENV['API_VERSION'];
 });
 
 // REST-API
