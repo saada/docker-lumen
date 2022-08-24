@@ -18,8 +18,7 @@ cd docker-lumen
 now, create the app in the `images/php` directory named `app`
 
 ```bash
-cd images/php
-docker run --rm -it -v $(pwd):/app saada/lumen-cli lumen new app
+docker run --rm -it -v $(pwd)/images/php:/app $(docker build -q .) composer create-project --prefer-dist laravel/lumen ./app
 ```
 
 ### Configuration
