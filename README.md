@@ -1,5 +1,6 @@
-# The Book-Keeping Network
-## Utilising: Docker + Lumen with Nginx, MySQL, and Memcached
+# Docker + Lumen with Nginx, MySQL, and Memcached
+
+![image](Lumen_splash.png)
 
 ## Why?
 
