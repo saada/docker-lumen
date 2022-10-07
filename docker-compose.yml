@@ -1,45 +1,46 @@
-nginx:
-  build: images/nginx
-  command: nginx -g "daemon off;"
-  links:
-    - php
-  ports:
-    - "80:80"
-  volumes:
-    - ./images/php/app/public:/var/www/html/app/public
-php:
-  build: images/php
-  volumes:
-    - ./images/php:/var/www/html
-  working_dir: /var/www/html/app/public
-  command: php-fpm
-  links:
-    - db
-    - cache
-  ports:
-    - "9000:9000"
-  environment:
-    APP_ENV: local
-    APP_DEBUG: 'true'
-    APP_KEY: SomeRandomKey!!!
-    APP_LOCALE: en
-    APP_FALLBACK_LOCALE: en
-    DB_CONNECTION: mysql
-    DB_HOST: db
-    DB_DATABASE: ${DB_DATABASE}
-    DB_USERNAME: ${DB_USERNAME}
-    DB_PASSWORD: ${DB_PASSWORD}
-    MEMCACHED_HOST: cache
-    CACHE_DRIVER: memcached
-db:
-  image: mysql:8
-  command: --default-authentication-plugin=mysql_native_password # needed as of mysql 8
-  ports:
-    - "3306:3306"
-  environment:
-    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    MYSQL_DATABASE: ${MYSQL_DATABASE}
-    MYSQL_USER: ${MYSQL_USERNAME}
-    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-cache:
-  image: memcached:1.6-alpine
+services:
+  nginx:
+    build: images/nginx
+    command: nginx -g "daemon off;"
+    links:
+      - php
+    ports:
+      - "80:80"
+    volumes:
+      - ./images/php/app/public:/var/www/html/app/public
+  php:
+    build: images/php
+    volumes:
+      - ./images/php:/var/www/html
+    working_dir: /var/www/html/app/public
+    command: php-fpm
+    links:
+      - db
+      - cache
+    ports:
+      - "9000:9000"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: 'true'
+      APP_KEY: SomeRandomKey!!!
+      APP_LOCALE: en
+      APP_FALLBACK_LOCALE: en
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      MEMCACHED_HOST: cache
+      CACHE_DRIVER: memcached
+  db:
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password # needed as of mysql 8
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  cache:
+    image: memcached:1.6-alpine
