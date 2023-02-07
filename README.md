@@ -4,6 +4,8 @@
 
 ## Why?
 
+## REMEBER -- File in /php is rooted -- resset to locl
+
 Setting up an entire Lumen stack can be time consuming. This repo is a quick way to write apps in PHP using Lumen from an any Docker client. It uses docker-compose to setup the application services, databases, cache, etc...
 
 ## Clone this repo
